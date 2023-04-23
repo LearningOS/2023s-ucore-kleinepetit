@@ -45,8 +45,7 @@ int sys_task_info(struct TaskInfo *ti){
 		ti->syscall_times[i] = curr_proc()->info->syscall_times[i];
 	}
 	ti->status = curr_proc()->info->status;
-	ti->time = 10000000000;
-	// ti->time = get_cycle() / CPU_FREQ * 1000 + (get_cycle() % CPU_FREQ) * 1000 / CPU_FREQ - curr_proc()->info->time;
+	ti->time = get_cycle() / CPU_FREQ * 1000 + (get_cycle() % CPU_FREQ) * 1000 / CPU_FREQ - curr_proc()->info->time;
 	return 0;
 }
 
