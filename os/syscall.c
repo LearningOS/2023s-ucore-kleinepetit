@@ -40,12 +40,8 @@ uint64 sys_gettimeofday(TimeVal *val, int _tz)
 * LAB1: you may need to define sys_task_info here
 */
 int sys_task_info(struct TaskInfo *ti){
-	for (int i = 0; i < MAX_SYSCALL_NUM; i++)
-	{
-		ti->syscall_times[i] = curr_proc()->info->syscall_times[i];
-	}	
-	ti->status = curr_proc()->info->status;
-	ti->time = 9223372036854775800/*get_cycle()/CPU_FREQ * 1000 + (get_cycle()%CPU_FREQ) * 1000 / CPU_FREQ - curr_proc()->info->time*/; 
+	ti = curr_proc()->info; 
+	curr_proc()->info->time = curr_proc()->info->begintime - get_cycle() / CPU_FREQ * 1000 + (get_cycle() % CPU_FREQ) * 1000 / CPU_FREQ;
 	return 0;
 }
 
