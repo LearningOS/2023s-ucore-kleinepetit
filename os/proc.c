@@ -36,7 +36,6 @@ void proc_init(void)
 		/*
 		* LAB1: you may need to initialize your new fields of proc here
 		*/
-		memset(p->info->syscall_times, 0, MAX_SYSCALL_NUM);
 		p->info = &theinfo;
 	}
 	idle.kstack = (uint64)boot_stack_top;

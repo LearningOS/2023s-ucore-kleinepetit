@@ -51,7 +51,8 @@ int run_all_app()
 		/*
 		* LAB1: you may need to initialize your new fields of proc here
 		*/
-		p->info = 0;
+		memset(p->info->syscall_times, 0, MAX_SYSCALL_NUM);
+		p->info->status = Ready;
 	}
 	return 0;
 }
