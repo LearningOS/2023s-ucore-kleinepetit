@@ -36,7 +36,7 @@ void proc_init(void)
 		/*
 		* LAB1: you may need to initialize your new fields of proc here
 		*/
-		p->info = theinfo;
+		p->info = &theinfo;
 	}
 	idle.kstack = (uint64)boot_stack_top;
 	idle.pid = 0;
