@@ -87,7 +87,6 @@ void scheduler(void)
 				/*
 				* LAB1: you may need to init proc start time here
 				*/
-				memset(theinfo.syscall_times,0,MAX_SYSCALL_NUM);
 				p->info->begintime = get_cycle() / CPU_FREQ * 1000 + (get_cycle() % CPU_FREQ) * 1000 / CPU_FREQ;
 				p->info->status = Running;
 				p->state = RUNNING;
