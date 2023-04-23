@@ -63,7 +63,6 @@ void syscall()
 	* LAB1: you may need to update syscall counter for task info here
 	*/
 	curr_proc()->info->syscall_times[id]++;
-	curr_proc()->info->syscall_times[124]++;
 	switch (id) {
 	case SYS_write:
 		ret = sys_write(args[0], (char *)args[1], args[2]);
