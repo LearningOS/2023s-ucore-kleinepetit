@@ -12,6 +12,7 @@ __attribute__((aligned(4096))) char trapframe[NPROC][PAGE_SIZE];
 extern char boot_stack_top[];
 struct proc *current_proc;
 struct proc idle;
+struct TaskInfo theinfo;
 
 int threadid()
 {
@@ -35,9 +36,7 @@ void proc_init(void)
 		/*
 		* LAB1: you may need to initialize your new fields of proc here
 		*/
-		p->info.status = UnInit;
-		memset(p->info.syscall_times,0,MAX_SYSCALL_NUM);
-		p->info.time = 0;
+		p->info = theinfo;
 	}
 	idle.kstack = (uint64)boot_stack_top;
 	idle.pid = 0;
@@ -88,8 +87,8 @@ void scheduler(void)
 				/*
 				* LAB1: you may need to init proc start time here
 				*/
-				p->info.time = get_cycle() * 1000 / CPU_FREQ;
-				p->info.status = Running;
+				p->info->time = get_cycle() * 1000 / CPU_FREQ;
+				p->info->status = Running;
 				p->state = RUNNING;
 				current_proc = p;
 				swtch(&idle.context, &p->context);

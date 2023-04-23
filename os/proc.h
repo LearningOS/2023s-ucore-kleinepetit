@@ -52,7 +52,7 @@ struct proc {
 	/*
 	* LAB1: you may need to add some new fields here
 	*/
-	struct TaskInfo info;
+	struct TaskInfo *info;
 };
 
 /*
