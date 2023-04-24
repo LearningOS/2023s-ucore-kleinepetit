@@ -7,17 +7,17 @@
 #define MAX_SYSCALL_NUM 500
 
 typedef enum {
-    UnInit,
-    Ready,
-    Running,
-    Exited,
+	UnInit,
+	Ready,
+	Running,
+	Exited,
 } TaskStatus;
 
-struct TaskInfo {
-    TaskStatus status;
-    unsigned int syscall_times[MAX_SYSCALL_NUM];
-    int time;
-};
+typedef struct {
+	TaskStatus status;
+	unsigned int syscall_times[MAX_SYSCALL_NUM];
+	int time;
+} TaskInfo;
 
 // Saved registers for kernel context switches.
 struct context {
@@ -52,7 +52,7 @@ struct proc {
 	/*
 	* LAB1: you may need to add some new fields here
 	*/
-	struct TaskInfo *info;
+	TaskInfo *info;
 };
 
 /*
