@@ -52,7 +52,9 @@ struct proc {
 	/*
 	* LAB1: you may need to add some new fields here
 	*/
-	TaskInfo *info;
+	uint64 runtime;
+	uint64 *syscall_times;
+	TaskStatus status;
 };
 
 /*
