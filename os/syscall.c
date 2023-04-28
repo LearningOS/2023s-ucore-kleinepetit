@@ -89,7 +89,7 @@ int mmap(void* start, unsigned long long len, int port, int flag, int fd){
 	pagetable_t pg = uvmcreate();
 	if(PGALIGNED(a) != 0 || len > (1 << 30)) //addr未对齐或者len超过1GB
 		return -1;
-	else if((port & ~0x7) == 0 || (port & 0x7) != 0)   //port不合法时报错
+	else if((port & ~0x7) != 0 || (port & 0x7) == 0)   //port不合法时报错
 		return -1;
 	else if(len == 0)//len=0直接返回
 		return 0;
@@ -98,7 +98,7 @@ int mmap(void* start, unsigned long long len, int port, int flag, int fd){
 		if(pa + len > PHYSTOP)   //物理内存不足时报错
 			return -1;
 		for (;;) {
-		if ((pte = (pte_t *) useraddr(pg, a)) == 0)
+		if ((pte = walk(pg, a, 1)) == 0)
 			return -1;
 		if (*pte & PTE_V) {   //存在已映射页时报错
 			errorf("remap");
@@ -120,7 +120,7 @@ int munmap(void* start, unsigned long long len){
 	pagetable_t pagetable = curr_proc()->pagetable;
 	uint64 npages = (len -1) / PGSIZE + 1;
 	for (a = (uint64)start; a < (uint64)start + npages * PGSIZE; a += PGSIZE) {
-		if ((pte = (pte_t *) useraddr(pagetable, a)) == 0)
+		if ((pte = walk(pagetable, a, 1)) == 0)
 			continue;
 		if ((*pte & PTE_V) != 0) {
 			if (PTE_FLAGS(*pte) == PTE_V)
