@@ -87,7 +87,7 @@ int mmap(void* start, unsigned long long len, int port, int flag, int fd){
 	uint64 a = (uint64) start;
 	uint64 last = PGROUNDDOWN(a + len - 1);
 	pagetable_t pg = uvmcreate();
-	if(((uint64)start % PGSIZE) != 0 || len > (1 << 30)) //addr未对齐或者len超过1GB
+	if(PGALIGNED(a) != 0 || len > (1 << 30)) //addr未对齐或者len超过1GB
 		return -1;
 	else if((port & ~0x7) == 0 || (port & 0x7) != 0)   //port不合法时报错
 		return -1;
